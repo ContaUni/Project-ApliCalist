@@ -1,1 +1,0 @@
-#Instancia a API do Django
