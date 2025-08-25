@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  back:
+    build: .
+    image: aplicalist-back
+    container_name: aplicalist_back
+    command: sh -c "python manage.py migrate && gunicorn project.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=vitor
+      - DATABASE_PASSWORD=133122
+      - DATABASE_NAME=peso
+      - DATABASE_PORT=5432
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14-alpine
+    container_name: aplicalist_db
+    environment:
+      - POSTGRES_USER=vitor
+      - POSTGRES_DB=peso
+      - POSTGRES_PASSWORD=133122
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-data:
