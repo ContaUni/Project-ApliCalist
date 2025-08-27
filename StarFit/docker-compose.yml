@@ -1,11 +1,8 @@
-version: '3.8'
-
 services:
-  back:
+  web:
     build: .
-    image: aplicalist-back
-    container_name: aplicalist_back
-    command: sh -c "python manage.py migrate && gunicorn project.wsgi:application --bind 0.0.0.0:8000"
+    container_name: startfit_web
+    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
@@ -21,9 +18,9 @@ services:
 
   db:
     image: postgres:14-alpine
-    container_name: aplicalist_db
+    container_name: startfit_db
     environment:
-      - POSTGRES_USER=vitor
+      - POSTG-RES_USER=vitor
       - POSTGRES_DB=peso
       - POSTGRES_PASSWORD=133122
     volumes:
